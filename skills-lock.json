@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "skills": {
+    "code-quality": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/code-quality/SKILL.md",
+      "computedHash": "1a652e9193a298625f1c980c48860c2a38af69077d0d6eecc92868cb0eadf13f"
+    },
+    "correctness-and-error-handling": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/correctness-and-error-handling/SKILL.md",
+      "computedHash": "536a57512573e8800fc0e12e66ebd092f75cb59379b0ee0f9915cd55131da525"
+    },
+    "create-client-tool": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/create-client-tool/SKILL.md",
+      "computedHash": "c1e3580618232da8644068809b0133e019cead297e9b16c234661b74e15afb09"
+    },
+    "dependencies-audit": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/dependencies-audit/SKILL.md",
+      "computedHash": "93a72fd49c36d2588e5a0c2710f5d8c9c9c65b2b930dc215380a89853415f20e"
+    },
+    "design": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/design/SKILL.md",
+      "computedHash": "530b80743b60b28c93d5880438e5652717705baa456be0f2ce1ed31b2e3c21f1"
+    },
+    "dm-graph-traversal": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/dm-graph-traversal/SKILL.md",
+      "computedHash": "0d1df5ceff2c1f874f903418ab5f1c6e81b5d44e81f71f420408ce8485787af8"
+    },
+    "dm-limits-and-best-practices": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/dm-limits-and-best-practices/SKILL.md",
+      "computedHash": "e69a119d2ffd8378e23f5996ae1ccbcc7c087e7bf353a2377ffac12f53ba13c6"
+    },
+    "flows-app-brief": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/flows-app-brief/SKILL.md",
+      "computedHash": "27a298ff50273e5bb56379255095134bdbee4abff0574a143de2e36363109c69"
+    },
+    "flows-code-review": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/flows-code-review/SKILL.md",
+      "computedHash": "18a7cdb5cb056b6a8d866ddc0a2a3c8e2fe1a413b33d95ff60f0eb52b21b0000"
+    },
+    "flows-design-review": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/flows-design-review/SKILL.md",
+      "computedHash": "a8cc58647102f34cc9ffde8dce0e9e01e56c87f7ba6ce474d5073b8ea2b50ee3"
+    },
+    "flows-external-app-submit": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/flows-external-app-submit/SKILL.md",
+      "computedHash": "7cd184bd2c106f2e77b930a45212e46ed41b05d64598821cd3ecc20588602bef"
+    },
+    "graph-viewer": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/graph-viewer/SKILL.md",
+      "computedHash": "39d020d7b10b3f86ddde204587f0a7e0db10c96de125d5ca8d11545a82757164"
+    },
+    "integrate-atlas-chat": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/integrate-atlas-chat/SKILL.md",
+      "computedHash": "95b4435019314476fa4c1afb2eb9e52f24b6cf6dcfb138242d17d867de8ecbb3"
+    },
+    "integrate-file-viewer": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/integrate-file-viewer/SKILL.md",
+      "computedHash": "d9b25253dfe05ad887ddb815956052407913fe082008f4fc2f0d870e5aba788b"
+    },
+    "integrate-fusion-agent": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/integrate-fusion-agent/SKILL.md",
+      "computedHash": "3582d079b8b5f0e302924b155ca50325b00919d10be0a28dcbb162fedbd5c74d"
+    },
+    "integrate-todo-list": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/integrate-todo-list/SKILL.md",
+      "computedHash": "3cf6b791246a5e521cc9d2dc9529fad81998bd9f98ec4a38ebdd13cd8b6d14b2"
+    },
+    "migrate-app-to-flows": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/migrate-app-to-flows/SKILL.md",
+      "computedHash": "7915a891755480c8ac9de5fdbfa7c8db1292fb670ac09785aeedc8aebc94077c"
+    },
+    "performance": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/performance/SKILL.md",
+      "computedHash": "4880a4eb19c2f0ad3cbf0b299e6dcea910e65c8561e3932877614ecbd906ed57"
+    },
+    "pull-changes-resolve-conflicts": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/pull-changes-resolve-conflicts/SKILL.md",
+      "computedHash": "82f1610a9f9f72a2f419a309fea027497d0622cb997827cfd1eb88efb2ef65a1"
+    },
+    "reveal-3d": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/reveal-3d/SKILL.md",
+      "computedHash": "9820bdab26282cecb39e743a4b25c7abfbd83f42f435c404b1ff4aa13e8843a7"
+    },
+    "security": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/security/SKILL.md",
+      "computedHash": "37450f8c244d02b26820d2367e4deedd5f3692e440f0e554b03757f43277d262"
+    },
+    "setup-flows-auth": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/setup-flows-auth/SKILL.md",
+      "computedHash": "5956f7e84e7f7d9e25de0c6cc36859ca41763112b96ac846922cd32141c15f8d"
+    },
+    "setup-python-tools": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/setup-python-tools/SKILL.md",
+      "computedHash": "bacffb63bf9b943ddd454810def9d0c776290ec873a5493c154c86add8f6fdb1"
+    },
+    "skill-creator": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "computedHash": "1d94e4774be2ea41284d6ace12d1a47f1d9a8201e3888a887b7f3da621528927"
+    },
+    "test-coverage": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/test-coverage/SKILL.md",
+      "computedHash": "98dcfa189eac00515c904903d7426c551b653774e8fec4fcb682e8bce9ac33a0"
+    },
+    "use-topbar": {
+      "source": "cognitedata/builder-skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-topbar/SKILL.md",
+      "computedHash": "65e7c187fa5a00781bddfd25fca706f693041d1f8a4f333459cb513879d74c68"
+    }
+  }
+}
