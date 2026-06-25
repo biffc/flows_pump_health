@@ -1,0 +1,5 @@
+When you want to restore later, run:
+
+git apply --index staged.patch
+git apply working.patch
+Copy-Item C:\Users\wcull\Desktop\flows_wip_clean_20260625_114124\untracked* . -Recurse -Force

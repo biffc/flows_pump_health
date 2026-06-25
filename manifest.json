@@ -1,6 +1,11 @@
 {
   "manifestVersion": 1,
   "permissions": {
-    "network": []
+    "network": [
+      {
+        "sources": ["https://tridiagonal.ai"],
+        "directives": ["img-src"]
+      }
+    ]
   }
 }

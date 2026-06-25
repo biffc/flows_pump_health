@@ -1,7 +1,6 @@
 import path from 'node:path';
 
 import {
-  fusionOpenPlugin,
   manifestCspPlugin,
   mkcertPlugin,
 } from '@cognite/app-sdk/vite';
@@ -13,7 +12,7 @@ export default defineConfig({
   base: './',
   // manifestCspPlugin() must stay first — its middleware sets the
   // Content-Security-Policy header before any HTML response is sent.
-  plugins: [manifestCspPlugin(), react(), mkcertPlugin(), fusionOpenPlugin(), tailwindcss()],
+  plugins: [manifestCspPlugin(), react(), mkcertPlugin(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

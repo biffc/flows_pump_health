@@ -6,7 +6,7 @@
   "infra": "appsApi",
   "deployments": [
     {
-      "org": "tridiagonal.ai",
+      "org": "tridiagonalsolutions",
       "project": "tridcognite-sanbox",
       "baseUrl": "https://aw-was-gp-001.cognitedata.com",
       "published": false,

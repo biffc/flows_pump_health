@@ -1,0 +1,2712 @@
+{
+  "generated_at_utc": "2026-06-25T16:19:38.228748Z",
+  "model": {
+    "space": "pump_health_v2",
+    "external_id": "PumpModelV2",
+    "name": "Pump Health Model V2",
+    "description": "Clean Pump Health data model (Modeling v2)",
+    "version": "1",
+    "views": [
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "SensorView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpFeatureView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpPredictionView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "MaintenanceEventView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "FailureEventView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpTimeSeriesView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "SensorReadingView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasSensorView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasFeatureView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasPredictionView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasMaintenanceEventView",
+        "version": "1",
+        "type": "view"
+      },
+      {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasFailureEventView",
+        "version": "1",
+        "type": "view"
+      }
+    ],
+    "is_global": false,
+    "last_updated_time": 1780698181455,
+    "created_time": 1780624141434
+  },
+  "views": [
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpView",
+      "name": "Pump View",
+      "description": "View exposing pump properties",
+      "implements": [],
+      "version": "1",
+      "writable": false,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "pumpId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Pump"
+          },
+          "container_property_identifier": "pumpId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "name": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Pump"
+          },
+          "container_property_identifier": "name",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Pump"
+          },
+          "container_property_identifier": "description",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        },
+        "installDate": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Pump"
+          },
+          "container_property_identifier": "installDate",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "SensorView",
+      "name": "Sensor View",
+      "description": "View exposing sensor properties",
+      "implements": [],
+      "version": "1",
+      "writable": false,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "unit": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Sensor"
+          },
+          "container_property_identifier": "unit",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorName": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Sensor"
+          },
+          "container_property_identifier": "sensorName",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorType": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Sensor"
+          },
+          "container_property_identifier": "sensorType",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        },
+        "installationDate": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "Sensor"
+          },
+          "container_property_identifier": "installationDate",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpFeatureView",
+      "name": "Pump Feature View",
+      "description": "View exposing pump feature properties",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "featureId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpFeature"
+          },
+          "container_property_identifier": "featureId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "name": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpFeature"
+          },
+          "container_property_identifier": "name",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "value": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpFeature"
+          },
+          "container_property_identifier": "value",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "pumpId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpFeature"
+          },
+          "container_property_identifier": "pumpId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpFeature"
+          },
+          "container_property_identifier": "timestamp",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpPredictionView",
+      "name": "Pump Prediction View",
+      "description": "View exposing pump prediction properties",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "predictionId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpPrediction"
+          },
+          "container_property_identifier": "predictionId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "pumpId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpPrediction"
+          },
+          "container_property_identifier": "pumpId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "predictionType": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpPrediction"
+          },
+          "container_property_identifier": "predictionType",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "predictionValue": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpPrediction"
+          },
+          "container_property_identifier": "predictionValue",
+          "type": {
+            "list": false,
+            "type": "float64"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpPrediction"
+          },
+          "container_property_identifier": "timestamp",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "MaintenanceEventView",
+      "name": "Maintenance Event View",
+      "description": "View exposing maintenance event properties",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "eventId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "MaintenanceEvent"
+          },
+          "container_property_identifier": "eventId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "MaintenanceEvent"
+          },
+          "container_property_identifier": "timestamp",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "maintenanceType": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "MaintenanceEvent"
+          },
+          "container_property_identifier": "maintenanceType",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "MaintenanceEvent"
+          },
+          "container_property_identifier": "description",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "pumpId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "MaintenanceEvent"
+          },
+          "container_property_identifier": "pumpId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "FailureEventView",
+      "name": "Failure Event View",
+      "description": "View exposing failure event properties",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "eventId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "FailureEvent"
+          },
+          "container_property_identifier": "eventId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "FailureEvent"
+          },
+          "container_property_identifier": "timestamp",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "failureType": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "FailureEvent"
+          },
+          "container_property_identifier": "failureType",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "severity": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "FailureEvent"
+          },
+          "container_property_identifier": "severity",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "FailureEvent"
+          },
+          "container_property_identifier": "description",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpTimeSeriesView",
+      "name": "Pump Time Series View",
+      "description": "View for pump-related time series metadata",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "pumpId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpTimeSeries"
+          },
+          "container_property_identifier": "pumpId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpTimeSeries"
+          },
+          "container_property_identifier": "sensorId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpTimeSeries"
+          },
+          "container_property_identifier": "description",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "SensorReadingView",
+      "name": "Sensor Reading View",
+      "description": "View exposing sensor reading properties",
+      "implements": [],
+      "version": "1",
+      "writable": false,
+      "used_for": "node",
+      "is_global": false,
+      "properties": {
+        "sensorId": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "SensorReading"
+          },
+          "container_property_identifier": "sensorId",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "SensorReading"
+          },
+          "container_property_identifier": "timestamp",
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "value": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "SensorReading"
+          },
+          "container_property_identifier": "value",
+          "type": {
+            "list": false,
+            "type": "float64"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "status": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "SensorReading"
+          },
+          "container_property_identifier": "status",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasSensorView",
+      "name": "Pump Has Sensor View",
+      "description": "View exposing Pump → Sensor relationship",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "edge",
+      "is_global": false,
+      "properties": {
+        "startNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasSensor"
+          },
+          "container_property_identifier": "startNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasSensor"
+          },
+          "container_property_identifier": "endNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasFeatureView",
+      "name": "Pump Has Feature View",
+      "description": "View exposing Pump → Feature relationship",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "edge",
+      "is_global": false,
+      "properties": {
+        "startNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasFeature"
+          },
+          "container_property_identifier": "startNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasFeature"
+          },
+          "container_property_identifier": "endNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasPredictionView",
+      "name": "Pump Has Prediction View",
+      "description": "View exposing Pump → Prediction relationship",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "edge",
+      "is_global": false,
+      "properties": {
+        "startNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasPrediction"
+          },
+          "container_property_identifier": "startNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasPrediction"
+          },
+          "container_property_identifier": "endNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasMaintenanceEventView",
+      "name": "Pump Has Maintenance Event View",
+      "description": "View exposing Pump → MaintenanceEvent relationship",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "edge",
+      "is_global": false,
+      "properties": {
+        "startNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasMaintenanceEvent"
+          },
+          "container_property_identifier": "startNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasMaintenanceEvent"
+          },
+          "container_property_identifier": "endNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasFailureEventView",
+      "name": "Pump Has Failure Event View",
+      "description": "View exposing Pump → FailureEvent relationship",
+      "implements": [],
+      "version": "1",
+      "writable": true,
+      "used_for": "edge",
+      "is_global": false,
+      "properties": {
+        "startNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasFailureEvent"
+          },
+          "container_property_identifier": "startNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "container": {
+            "space": "pump_health_v2",
+            "external_id": "PumpHasFailureEvent"
+          },
+          "container_property_identifier": "endNode",
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "last_updated_time": 1780624140402,
+      "created_time": 1780624140402
+    }
+  ],
+  "containers": [
+    {
+      "space": "pump_health_v2",
+      "external_id": "Pump",
+      "properties": {
+        "pumpId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "name": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "location": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "manufacturer": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "installationDate": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        },
+        "installDate": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "description": "Represents a pump asset",
+      "name": "Pump",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "Sensor",
+      "properties": {
+        "sensorId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "name": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "unit": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorName": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorType": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        },
+        "installationDate": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "description": "Represents a sensor attached to a pump",
+      "name": "Sensor",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpFeature",
+      "properties": {
+        "featureId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "name": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "value": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "pumpId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "description": "Represents a feature or characteristic of a pump",
+      "name": "Pump Feature",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpPrediction",
+      "properties": {
+        "predictionId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "pumpId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "predictionType": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "predictionValue": {
+          "type": {
+            "list": false,
+            "type": "float64"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Prediction record associated with a pump",
+      "name": "Pump Prediction",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "MaintenanceEvent",
+      "properties": {
+        "eventId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "maintenanceType": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "pumpId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Represents a maintenance event associated with a pump",
+      "name": "Maintenance Event",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "FailureEvent",
+      "properties": {
+        "eventId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "failureType": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "severity": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Represents a failure event associated with a pump",
+      "name": "Failure Event",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpTimeSeries",
+      "properties": {
+        "pumpId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "description": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Raw sensor time series for pumps",
+      "name": "Pump Time Series",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "SensorReading",
+      "properties": {
+        "readingId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "sensorId": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "timestamp": {
+          "type": {
+            "list": false,
+            "type": "timestamp"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "value": {
+          "type": {
+            "list": false,
+            "type": "float64"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "status": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": true,
+          "auto_increment": false,
+          "constraint_state": {}
+        }
+      },
+      "description": "Represents an individual reading from a sensor",
+      "name": "Sensor Reading",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "node"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasSensor",
+      "properties": {
+        "startNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Relationship linking pumps to sensors",
+      "name": "Pump Has Sensor",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "edge"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasFeature",
+      "properties": {
+        "startNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Relationship linking pumps to pump features",
+      "name": "Pump Has Feature",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "edge"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasPrediction",
+      "properties": {
+        "startNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Relationship linking pumps to prediction records",
+      "name": "Pump Has Prediction",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "edge"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasMaintenanceEvent",
+      "properties": {
+        "startNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Relationship linking pumps to maintenance events",
+      "name": "Pump Has Maintenance Event",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "edge"
+    },
+    {
+      "space": "pump_health_v2",
+      "external_id": "PumpHasFailureEvent",
+      "properties": {
+        "startNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        },
+        "endNode": {
+          "type": {
+            "list": false,
+            "collation": "ucs_basic",
+            "type": "text"
+          },
+          "immutable": false,
+          "nullable": false,
+          "auto_increment": false,
+          "constraint_state": {
+            "nullability": "current"
+          }
+        }
+      },
+      "description": "Relationship linking pumps to failure events",
+      "name": "Pump Has Failure Event",
+      "constraints": {},
+      "indexes": {},
+      "is_global": false,
+      "last_updated_time": 1780624138941,
+      "created_time": 1780624138941,
+      "used_for": "edge"
+    }
+  ],
+  "view_samples": [
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "pump_101",
+          "version": 1,
+          "last_updated_time": 1780630402916,
+          "created_time": 1780630402916,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpView/1": {
+                "name": "Pump 101",
+                "pumpId": "101",
+                "description": "Primary feed pump",
+                "installDate": "2020-01-15T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "pump_102",
+          "version": 1,
+          "last_updated_time": 1780630402916,
+          "created_time": 1780630402916,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpView/1": {
+                "name": "Pump 102",
+                "pumpId": "102",
+                "description": "Backup pump for Unit B",
+                "installDate": "2019-06-10T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "pump_103",
+          "version": 1,
+          "last_updated_time": 1780630402916,
+          "created_time": 1780630402916,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpView/1": {
+                "name": "Pump 103",
+                "pumpId": "103",
+                "description": "General service pump",
+                "installDate": "2021-03-22T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "pump_104",
+          "version": 1,
+          "last_updated_time": 1780630402916,
+          "created_time": 1780630402916,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpView/1": {
+                "name": "Pump 104",
+                "pumpId": "104",
+                "description": "Chemical dosing pump",
+                "installDate": "2018-11-05T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "pump_105",
+          "version": 1,
+          "last_updated_time": 1780630402916,
+          "created_time": 1780630402916,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpView/1": {
+                "name": "Pump 105",
+                "pumpId": "105",
+                "description": "New installation for expansion",
+                "installDate": "2022-08-30T00:00:00+00:00"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "SensorView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "sensor_101_vibration_rms",
+          "version": 1,
+          "last_updated_time": 1780876586346,
+          "created_time": 1780876586346,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorView/1": {
+                "unit": "",
+                "sensorName": "vibration_rms sensor for pump 101",
+                "sensorType": "vibration_rms"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "sensor_101_motor_current",
+          "version": 1,
+          "last_updated_time": 1780876586346,
+          "created_time": 1780876586346,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorView/1": {
+                "unit": "",
+                "sensorName": "motor_current sensor for pump 101",
+                "sensorType": "motor_current"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "sensor_101_discharge_pressure",
+          "version": 1,
+          "last_updated_time": 1780876586346,
+          "created_time": 1780876586346,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorView/1": {
+                "unit": "",
+                "sensorName": "discharge_pressure sensor for pump 101",
+                "sensorType": "discharge_pressure"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "sensor_101_suction_pressure",
+          "version": 1,
+          "last_updated_time": 1780876586346,
+          "created_time": 1780876586346,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorView/1": {
+                "unit": "",
+                "sensorName": "suction_pressure sensor for pump 101",
+                "sensorType": "suction_pressure"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "sensor_101_flow_rate",
+          "version": 1,
+          "last_updated_time": 1780876586346,
+          "created_time": 1780876586346,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorView/1": {
+                "unit": "",
+                "sensorName": "flow_rate sensor for pump 101",
+                "sensorType": "flow_rate"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpFeatureView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "feature_101_flow_rate",
+          "version": 1,
+          "last_updated_time": 1781198942626,
+          "created_time": 1781198942626,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpFeatureView/1": {
+                "name": "Flow Rate",
+                "value": "150",
+                "pumpId": "101",
+                "featureId": "feature_101_flow_rate",
+                "timestamp": "2026-06-11T12:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "feature_101_pressure",
+          "version": 1,
+          "last_updated_time": 1781198942626,
+          "created_time": 1781198942626,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpFeatureView/1": {
+                "name": "Discharge Pressure",
+                "value": "85",
+                "pumpId": "101",
+                "featureId": "feature_101_pressure",
+                "timestamp": "2026-06-11T12:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "feature_101_temperature",
+          "version": 1,
+          "last_updated_time": 1781198942626,
+          "created_time": 1781198942626,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpFeatureView/1": {
+                "name": "Bearing Temperature",
+                "value": "72",
+                "pumpId": "101",
+                "featureId": "feature_101_temperature",
+                "timestamp": "2026-06-11T12:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "feature_102_flow_rate",
+          "version": 1,
+          "last_updated_time": 1781198942626,
+          "created_time": 1781198942626,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpFeatureView/1": {
+                "name": "Flow Rate",
+                "value": "120",
+                "pumpId": "102",
+                "featureId": "feature_102_flow_rate",
+                "timestamp": "2026-06-11T12:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "feature_102_vibration",
+          "version": 1,
+          "last_updated_time": 1781198942626,
+          "created_time": 1781198942626,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpFeatureView/1": {
+                "name": "Vibration Level",
+                "value": "8.5",
+                "pumpId": "102",
+                "featureId": "feature_102_vibration",
+                "timestamp": "2026-06-11T12:00:00+00:00"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpPredictionView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "prediction_101_2025-01-01T00_00_00Z",
+          "version": 1,
+          "last_updated_time": 1780645394484,
+          "created_time": 1780645394484,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpPredictionView/1": {
+                "pumpId": "101",
+                "timestamp": "2025-01-01T00:00:00+00:00",
+                "predictionId": "prediction_101_2025-01-01T00_00_00Z",
+                "predictionType": "healthy",
+                "predictionValue": 0.01
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "prediction_103_2025-01-01T07_00_00Z",
+          "version": 1,
+          "last_updated_time": 1780645394484,
+          "created_time": 1780645394484,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpPredictionView/1": {
+                "pumpId": "103",
+                "timestamp": "2025-01-01T07:00:00+00:00",
+                "predictionId": "prediction_103_2025-01-01T07_00_00Z",
+                "predictionType": "degrading",
+                "predictionValue": 0.1
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "prediction_102_2025-01-02T00_00_00Z",
+          "version": 1,
+          "last_updated_time": 1780645394484,
+          "created_time": 1780645394484,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpPredictionView/1": {
+                "pumpId": "102",
+                "timestamp": "2025-01-02T00:00:00+00:00",
+                "predictionId": "prediction_102_2025-01-02T00_00_00Z",
+                "predictionType": "failure_soon",
+                "predictionValue": 0.8
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "prediction_101_healthy_2026-06-05T20_36_34Z",
+          "version": 1,
+          "last_updated_time": 1780709795042,
+          "created_time": 1780709795042,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpPredictionView/1": {
+                "pumpId": "101",
+                "timestamp": "2026-06-05T20:36:34+00:00",
+                "predictionId": "prediction_101_healthy_2026-06-05T20_36_34Z",
+                "predictionType": "healthy",
+                "predictionValue": 0.92
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "prediction_101_degrading_2026-06-05T20_36_34Z",
+          "version": 1,
+          "last_updated_time": 1780709795042,
+          "created_time": 1780709795042,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpPredictionView/1": {
+                "pumpId": "101",
+                "timestamp": "2026-06-05T20:36:34+00:00",
+                "predictionId": "prediction_101_degrading_2026-06-05T20_36_34Z",
+                "predictionType": "degrading",
+                "predictionValue": 0.07
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "MaintenanceEventView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "maintenance_ME-001",
+          "version": 2,
+          "last_updated_time": 1780643520907,
+          "created_time": 1780633256116,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "MaintenanceEventView/1": {
+                "pumpId": "101",
+                "eventId": "ME-001",
+                "timestamp": "2024-12-15T08:00:00+00:00",
+                "description": "Routine inspection",
+                "maintenanceType": "Inspection"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "maintenance_ME-002",
+          "version": 2,
+          "last_updated_time": 1780643520907,
+          "created_time": 1780633256116,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "MaintenanceEventView/1": {
+                "pumpId": "103",
+                "eventId": "ME-002",
+                "timestamp": "2024-11-02T12:00:00+00:00",
+                "description": "Seal replacement",
+                "maintenanceType": "Repair"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "FailureEventView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "failure_F001",
+          "version": 1,
+          "last_updated_time": 1780641158462,
+          "created_time": 1780641158462,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "FailureEventView/1": {
+                "eventId": "F001",
+                "severity": "Unknown",
+                "timestamp": "2025-01-02T00:00:00+00:00",
+                "description": "High vibration detected",
+                "failureType": "Bearing Failure"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "failure_F002",
+          "version": 1,
+          "last_updated_time": 1780641158462,
+          "created_time": 1780641158462,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "FailureEventView/1": {
+                "eventId": "F002",
+                "severity": "Unknown",
+                "timestamp": "2025-01-03T04:00:00+00:00",
+                "description": "Overcurrent trip",
+                "failureType": "Motor Failure"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpTimeSeriesView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "ts_meta_101_flow",
+          "version": 1,
+          "last_updated_time": 1781199598092,
+          "created_time": 1781199598092,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpTimeSeriesView/1": {
+                "pumpId": "101",
+                "sensorId": "pump_101_flow_rate",
+                "description": "Flow rate sensor for Pump 101"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "ts_meta_101_pressure",
+          "version": 1,
+          "last_updated_time": 1781199598092,
+          "created_time": 1781199598092,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpTimeSeriesView/1": {
+                "pumpId": "101",
+                "sensorId": "pump_101_pressure",
+                "description": "Discharge pressure sensor for Pump 101"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "ts_meta_101_temperature",
+          "version": 1,
+          "last_updated_time": 1781199598092,
+          "created_time": 1781199598092,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpTimeSeriesView/1": {
+                "pumpId": "101",
+                "sensorId": "pump_101_temperature",
+                "description": "Bearing temperature sensor for Pump 101"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "ts_meta_101_vibration",
+          "version": 1,
+          "last_updated_time": 1781199598092,
+          "created_time": 1781199598092,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpTimeSeriesView/1": {
+                "pumpId": "101",
+                "sensorId": "pump_101_vibration",
+                "description": "Vibration sensor for Pump 101"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "ts_meta_102_flow",
+          "version": 1,
+          "last_updated_time": 1781199598092,
+          "created_time": 1781199598092,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "PumpTimeSeriesView/1": {
+                "pumpId": "102",
+                "sensorId": "pump_102_flow_rate",
+                "description": "Flow rate sensor for Pump 102"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "SensorReadingView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "node",
+      "nodes": [
+        {
+          "space": "pump_health_v2",
+          "external_id": "reading_101_vibration_rms_2025-01-01T00:00:00Z",
+          "version": 1,
+          "last_updated_time": 1780876608557,
+          "created_time": 1780876608557,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorReadingView/1": {
+                "value": 1.5,
+                "status": "ALERT",
+                "sensorId": "sensor_101_vibration_rms",
+                "timestamp": "2025-01-01T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "reading_101_motor_current_2025-01-01T00:00:00Z",
+          "version": 1,
+          "last_updated_time": 1780876608557,
+          "created_time": 1780876608557,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorReadingView/1": {
+                "value": 81.1,
+                "status": "ALERT",
+                "sensorId": "sensor_101_motor_current",
+                "timestamp": "2025-01-01T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "reading_101_discharge_pressure_2025-01-01T00:00:00Z",
+          "version": 1,
+          "last_updated_time": 1780876608557,
+          "created_time": 1780876608557,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorReadingView/1": {
+                "value": 147.7,
+                "status": "ALERT",
+                "sensorId": "sensor_101_discharge_pressure",
+                "timestamp": "2025-01-01T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "reading_101_suction_pressure_2025-01-01T00:00:00Z",
+          "version": 1,
+          "last_updated_time": 1780876608557,
+          "created_time": 1780876608557,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorReadingView/1": {
+                "value": 100,
+                "status": "ALERT",
+                "sensorId": "sensor_101_suction_pressure",
+                "timestamp": "2025-01-01T00:00:00+00:00"
+              }
+            }
+          }
+        },
+        {
+          "space": "pump_health_v2",
+          "external_id": "reading_101_flow_rate_2025-01-01T00:00:00Z",
+          "version": 1,
+          "last_updated_time": 1780876608557,
+          "created_time": 1780876608557,
+          "instance_type": "node",
+          "properties": {
+            "pump_health_v2": {
+              "SensorReadingView/1": {
+                "value": 131.4,
+                "status": "ALERT",
+                "sensorId": "sensor_101_flow_rate",
+                "timestamp": "2025-01-01T00:00:00+00:00"
+              }
+            }
+          }
+        }
+      ],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasSensorView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "edge",
+      "nodes": [],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasFeatureView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "edge",
+      "nodes": [],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasPredictionView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "edge",
+      "nodes": [],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasMaintenanceEventView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "edge",
+      "nodes": [],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    },
+    {
+      "view_id": {
+        "space": "pump_health_v2",
+        "external_id": "PumpHasFailureEventView",
+        "version": "1",
+        "type": "view"
+      },
+      "used_for": "edge",
+      "nodes": [],
+      "edges": [],
+      "node_sample_error": null,
+      "edge_sample_error": null
+    }
+  ]
+}

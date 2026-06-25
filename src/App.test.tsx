@@ -1,11 +1,86 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { HostAppAPI, ConnectToHostAppResult } from '@cognite/app-sdk';
 import { CogniteClient } from '@cognite/sdk';
-import type { ComponentProps } from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import type { ComponentProps, ReactNode } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from './App';
+import { createChartPrompt } from './lib/chartPrompt';
+
+vi.mock('recharts', () => {
+  type ChartRow = Record<string, unknown>;
+
+  function dispatchChartClick(
+    onClick: ((event: { activePayload: Array<{ payload: ChartRow }> }) => void) | undefined,
+    data: ChartRow[] | undefined
+  ): void {
+    if (!onClick) return;
+    const payload = data && data.length > 1 ? data[1] : data?.[0] ?? {};
+    onClick({ activePayload: [{ payload }] });
+  }
+
+  function MockContainer({ children }: { children?: ReactNode }) {
+    return <div>{children}</div>;
+  }
+
+  function MockBarChart({
+    data,
+    onClick,
+    children,
+  }: {
+    data?: ChartRow[];
+    onClick?: (event: { activePayload: Array<{ payload: ChartRow }> }) => void;
+    children?: ReactNode;
+  }) {
+    return (
+      <div>
+        <button type="button" onClick={() => dispatchChartClick(onClick, data)}>
+          mock-barchart-click
+        </button>
+        {children}
+      </div>
+    );
+  }
+
+  function MockLineChart({
+    data,
+    onClick,
+    children,
+  }: {
+    data?: ChartRow[];
+    onClick?: (event: { activePayload: Array<{ payload: ChartRow }> }) => void;
+    children?: ReactNode;
+  }) {
+    return (
+      <div>
+        <button type="button" onClick={() => dispatchChartClick(onClick, data)}>
+          mock-linechart-click
+        </button>
+        {children}
+      </div>
+    );
+  }
+
+  function MockPrimitive({ children }: { children?: ReactNode }) {
+    return <div>{children}</div>;
+  }
+
+  return {
+    ResponsiveContainer: MockContainer,
+    BarChart: MockBarChart,
+    LineChart: MockLineChart,
+    PieChart: MockPrimitive,
+    CartesianGrid: MockPrimitive,
+    XAxis: MockPrimitive,
+    YAxis: MockPrimitive,
+    Tooltip: MockPrimitive,
+    Bar: MockPrimitive,
+    Line: MockPrimitive,
+    Pie: MockPrimitive,
+    Cell: MockPrimitive,
+  };
+});
 
 type AppDeps = NonNullable<ComponentProps<typeof App>['deps']>;
 
@@ -50,50 +125,84 @@ describe('App', () => {
     expect(screen.getByText('Loading project...')).toBeInTheDocument();
   });
 
-  it('renders splash with deployment targets and checklist copy', async () => {
+  it('renders pump health dashboard with schema metadata', async () => {
     render(<App deps={makeConnectedDeps()} />);
-    await waitFor(() => expect(screen.getByText('Welcome to Flows custom apps')).toBeInTheDocument());
-    expect(screen.getByText('App deployment checklist')).toBeInTheDocument();
-    expect(screen.getByText('Plan')).toBeInTheDocument();
-    expect(screen.getByText('Explore')).toBeInTheDocument();
-    expect(screen.getByText('Deploy')).toBeInTheDocument();
-    expect(screen.getByText('Support')).toBeInTheDocument();
-    expect(screen.getByText('Help & feedback')).toBeInTheDocument();
-    expect(screen.getByText('Your app will deploy to')).toBeInTheDocument();
-    expect(screen.getByText('org')).toBeInTheDocument();
-    expect(screen.getByText('and project')).toBeInTheDocument();
-    expect(screen.getByText('tridiagonal.ai')).toBeInTheDocument();
-    expect(screen.getByText('tridcognite-sanbox')).toBeInTheDocument();
-    expect(screen.getAllByText(/SPEC\.md/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/apps deploy --interactive/)).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
+    expect(screen.getByText('Pump fleet')).toBeInTheDocument();
+    expect(screen.getByText('Sensor alerts')).toBeInTheDocument();
+    expect(screen.getByText('Schema views')).toBeInTheDocument();
+    expect(screen.getByText('Predictions')).toBeInTheDocument();
+    expect(screen.getByText('Schema Explorer')).toBeInTheDocument();
+    expect(screen.getByText(/PumpModelV2 v1/)).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Predictions' }));
+    expect(screen.getByText('PumpCharts')).toBeInTheDocument();
   });
 
-  it('syncs internal state when the open step changes', async () => {
+  it('syncs internal state when pump selection changes', async () => {
     const api = makeApi();
     render(<App deps={makeConnectedDeps(api)} />);
-    await waitFor(() => expect(screen.getByText('App deployment checklist')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
 
-    await userEvent.click(screen.getByText('Explore'));
+    await userEvent.click(screen.getByRole('combobox', { name: 'Select pump' }));
+    await userEvent.click(screen.getByRole('option', { name: '102 - Pump 102' }));
 
     expect(api.syncInternalState).toHaveBeenCalledWith(
-      JSON.stringify({ openStep: 'Explore' })
+      JSON.stringify({ selectedPumpId: '102', schemaQuery: '', schemaFilter: 'all', chatDraft: '' })
     );
   });
 
-  it('restores the open step from initial state', async () => {
+  it('restores selected pump and schema filters from initial state', async () => {
     const api = makeApi();
     const deps: AppDeps = {
       connectToHostApp: vi.fn<AppDeps['connectToHostApp']>(() =>
-        Promise.resolve({ api, initialState: JSON.stringify({ openStep: 'Deploy' }) })
+        Promise.resolve({
+          api,
+          initialState: JSON.stringify({
+            selectedPumpId: '103',
+            schemaQuery: 'Prediction',
+            schemaFilter: 'node',
+            chatDraft: '',
+          }),
+        })
       ),
       createClient: vi.fn<AppDeps['createClient']>((config) => new CogniteClient(config)),
     };
     render(<App deps={deps} />);
-    await waitFor(() => expect(screen.getByText('App deployment checklist')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
 
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: /deploy/i })).toHaveAttribute('aria-expanded', 'true')
+    await userEvent.click(screen.getByRole('tab', { name: 'Pump Overview' }));
+    expect(screen.getByText('Pump 103')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Schema Explorer' }));
+    expect(screen.getByDisplayValue('Prediction')).toBeInTheDocument();
+    expect(screen.getByText('Pump Prediction View')).toBeInTheDocument();
+  });
+
+  it('builds a chart-driven chat prompt', () => {
+    expect(
+      createChartPrompt({
+        pumpId: '102',
+        pumpName: 'Pump 102',
+        metricLabel: 'failure risk',
+        metricValue: 80,
+      })
+    ).toContain('Pump 102 (Pump 102) has failure risk at 80.0.');
+  });
+
+  it('updates selected pump and chat draft from a chart click', async () => {
+    render(<App deps={makeConnectedDeps()} />);
+    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Predictions' }));
+    const barChartButtons = screen.getAllByRole('button', { name: 'mock-barchart-click' });
+    await userEvent.click(barChartButtons[0]);
+
+    expect(screen.getByText('Predictions for Pump 102')).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('tab', { name: 'Agent Chat' }));
+    expect(screen.getByLabelText('Agent chat message')).toHaveValue(
+      'Pump 102 (Pump 102) has failure risk at 80.0. Provide likely causes, immediate checks, and recommended next actions.'
     );
-    expect(screen.getByRole('button', { name: /plan/i })).toHaveAttribute('aria-expanded', 'false');
   });
 });
