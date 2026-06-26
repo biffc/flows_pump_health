@@ -156,7 +156,10 @@ const errorFallback = (
     <section className="mx-auto flex min-h-screen w-full max-w-lg flex-col justify-center p-4 sm:p-8">
       <div className="mx-auto w-full max-w-sm">
         <Alert>
-          <AlertDescription>Failed to connect to Fusion host</AlertDescription>
+          <AlertDescription>
+            Unable to connect to Fusion host. This app must run inside the Fusion custom-app iframe.
+            Open it from the Fusion development URL (port 3003), then refresh the page.
+          </AlertDescription>
         </Alert>
       </div>
     </section>
@@ -355,10 +358,13 @@ function AppContent({ api, initialState }: AppContentProps) {
     return matchesUsage && matchesText;
   });
 
-  const alertCount = data.sensorReadings.filter((reading) => reading.status === 'ALERT').length;
-  const maxPredictionRisk = selectedPredictions.reduce((max, prediction) => {
-    return prediction.predictionValue > max ? prediction.predictionValue : max;
-  }, 0);
+  const criticalCount = chartRows.filter((row) => row.status === 'critical').length;
+  const warningCount = chartRows.filter((row) => row.status === 'normal').length;
+  const healthyCount = chartRows.filter((row) => row.status === 'good').length;
+  const averageRisk =
+    chartRows.length === 0
+      ? 0
+      : chartRows.reduce((sum, row) => sum + row.riskPct, 0) / chartRows.length;
 
   function persistState(next: AppInternalState) {
     void api?.syncInternalState(JSON.stringify(next));
@@ -452,56 +458,71 @@ function AppContent({ api, initialState }: AppContentProps) {
   }
 
   return (
-    <main className="min-h-screen bg-muted/50 text-foreground">
-      <section className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-6 p-4 sm:p-8">
-        <Card>
-          <CardHeader>
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 pr-6">
-                <CardTitle as="h1">Pump Health Control Center</CardTitle>
-                <CardDescription>
-                  Connected directly to model {data.modelMetadata.externalId} v{data.modelMetadata.version} in space {data.modelMetadata.space}.
-                </CardDescription>
-              </div>
-              <div className="ml-auto flex shrink-0 items-start justify-end pl-10 pt-1">
-                <div className="rounded-2xl bg-slate-950/90 px-3 py-2 shadow-lg ring-1 ring-white/10">
+    <main className="phm-app min-h-screen text-foreground">
+      <section className="mx-auto flex min-h-screen w-full max-w-[1320px] flex-col gap-6 p-4 sm:p-6 lg:p-8">
+        <div className="phm-hero-shell">
+          <Card>
+            <div className="phm-hero px-6 py-6 sm:px-8">
+              <div className="flex items-start justify-between gap-4">
+                <div className="phm-hero-copy flex-1 pr-4">
+                  <CardTitle as="h1">
+                  PHM Modeling for Pumps
+                  </CardTitle>
+                  <CardDescription>
+                    Predictive Health Monitoring Dashboard • Live Data from {data.modelMetadata.externalId} v
+                    {data.modelMetadata.version} ({data.modelMetadata.space})
+                  </CardDescription>
+                </div>
+                <div className="ml-auto hidden shrink-0 items-start justify-end pl-6 pt-1 lg:flex">
                   <img
                     src="https://tridiagonal.ai/hubfs/Images%20AI/Untitled%20Design%20-%201%20-%20Edited.png"
                     alt="Tridiagonal.AI"
-                    className="block h-7 w-auto max-w-[180px] object-contain"
+                    className="block h-9 w-auto max-w-[220px] object-contain"
                     draggable="false"
                   />
                 </div>
               </div>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                <SummaryCard
+                  title="Total Pumps"
+                  value={String(data.pumps.length)}
+                  detail={dataQuery.isSuccess ? 'Live CDF model' : 'Fallback sample data'}
+                  tone="neutral"
+                  icon={<IconDatabase aria-hidden className="size-4" />}
+                />
+                <SummaryCard
+                  title="Critical"
+                  value={String(criticalCount)}
+                  detail="High-risk pumps"
+                  tone="danger"
+                  icon={<IconActivityHeartbeat aria-hidden className="size-4" />}
+                />
+                <SummaryCard
+                  title="Warning"
+                  value={String(warningCount)}
+                  detail="Needs attention"
+                  tone="warning"
+                  icon={<IconTool aria-hidden className="size-4" />}
+                />
+                <SummaryCard
+                  title="Healthy"
+                  value={String(healthyCount)}
+                  detail="Within normal range"
+                  tone="success"
+                  icon={<IconChartLine aria-hidden className="size-4" />}
+                />
+                <SummaryCard
+                  title="Avg Risk"
+                  value={`${averageRisk.toFixed(0)}%`}
+                  detail="Fleet-wide prediction"
+                  tone="accent"
+                  icon={<IconChartLine aria-hidden className="size-4" />}
+                />
+              </div>
             </div>
-          </CardHeader>
-          <CardContent className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            <MetricCard
-              title="Pump fleet"
-              value={String(data.pumps.length)}
-              detail={dataQuery.isSuccess ? 'Live CDF data' : 'Fallback sample data'}
-              icon={<IconDatabase aria-hidden className="size-4" />}
-            />
-            <MetricCard
-              title="Sensor alerts"
-              value={String(alertCount)}
-              detail="Latest sampled readings"
-              icon={<IconActivityHeartbeat aria-hidden className="size-4" />}
-            />
-            <MetricCard
-              title="Max risk"
-              value={`${(maxPredictionRisk * 100).toFixed(0)}%`}
-              detail={selectedPump ? `For pump ${selectedPump.pumpId}` : 'No pump selected'}
-              icon={<IconChartLine aria-hidden className="size-4" />}
-            />
-            <MetricCard
-              title="Schema views"
-              value={String(data.viewSchemas.length)}
-              detail="Directly from CDF model"
-              icon={<IconTool aria-hidden className="size-4" />}
-            />
-          </CardContent>
-        </Card>
+          </Card>
+        </div>
 
         {dataQuery.isError ? (
           <Alert variant="secondary">
@@ -511,111 +532,17 @@ function AppContent({ api, initialState }: AppContentProps) {
           </Alert>
         ) : null}
 
-        <Tabs defaultValue="overview">
-          <TabsList>
-            <TabsTrigger value="overview">Pump Overview</TabsTrigger>
-            <TabsTrigger value="predictions">Predictions</TabsTrigger>
-            <TabsTrigger value="schema">Schema Explorer</TabsTrigger>
-            <TabsTrigger value="chat">Agent Chat</TabsTrigger>
-          </TabsList>
-
-          <TabsPanel value="overview" className="space-y-4">
-            <Card className="w-full">
-              <CardHeader>
-                <CardTitle as="h2">Pump Drilldown</CardTitle>
-                <CardDescription>Select a pump to inspect linked operational data.</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Select value={selectedPump?.pumpId ?? ''} onValueChange={handlePumpChange}>
-                  <SelectTrigger className="w-full max-w-sm" aria-label="Select pump">
-                    <SelectValue placeholder="Select pump" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {data.pumps.map((pump) => (
-                      <SelectItem key={pump.externalId} value={pump.pumpId}>
-                        {pump.pumpId} - {pump.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                {selectedPump ? (
-                  <div className="grid gap-4 lg:grid-cols-2">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle as="h3">Pump Profile</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <dl className="grid grid-cols-[140px_1fr] gap-2 text-sm">
-                          <dt className="text-muted-foreground">Pump ID</dt>
-                          <dd>{selectedPump.pumpId}</dd>
-                          <dt className="text-muted-foreground">Name</dt>
-                          <dd>{selectedPump.name}</dd>
-                          <dt className="text-muted-foreground">Description</dt>
-                          <dd>{selectedPump.description}</dd>
-                          <dt className="text-muted-foreground">Install date</dt>
-                          <dd>{formatTimestamp(selectedPump.installDate)}</dd>
-                        </dl>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle as="h3">Maintenance Events</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <SimpleTable
-                          columns={['Event', 'Type', 'Timestamp']}
-                          rows={selectedMaintenance.map((event) => [
-                            event.eventId,
-                            event.maintenanceType,
-                            formatTimestamp(event.timestamp),
-                          ])}
-                          emptyMessage="No maintenance records for selected pump."
-                        />
-                      </CardContent>
-                    </Card>
-                  </div>
-                ) : null}
-
-                <Card className="w-full">
-                  <CardHeader>
-                    <CardTitle as="h3">Pump Features</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <SimpleTable
-                      columns={['Feature', 'Value', 'Timestamp']}
-                      rows={selectedFeatures.map((feature) => [
-                        feature.name,
-                        feature.value,
-                        formatTimestamp(feature.timestamp),
-                      ])}
-                      emptyMessage="No feature rows for selected pump."
-                    />
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </TabsPanel>
-
-          <TabsPanel value="predictions" className="space-y-4">
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,2fr)_360px]">
+          <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle as="h2">Prediction and Event Stream</CardTitle>
+                <CardTitle as="h2">Monitoring Charts</CardTitle>
                 <CardDescription>
-                  View inference outputs alongside failure events to support triage decisions.
+                  Click a datapoint to select a pump and prefill a contextual prompt for AI triage.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <Card className="w-full">
-                  <CardHeader>
-                    <CardTitle as="h3">PumpCharts</CardTitle>
-                    <CardDescription>
-                      Click a chart datapoint to select that pump and prefill a chat prompt for triage.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="grid w-full grid-cols-1 justify-items-stretch gap-4 lg:grid-cols-2">
-                    <div className="w-full min-w-0 rounded-lg border bg-card p-4">
+                <CardContent className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
+                  <div className="phm-chart-card phm-chart-risk w-full min-w-0 rounded-lg border bg-card p-4">
                       <h4 className="text-sm font-semibold">Failure Risk (%)</h4>
                       <div className="mt-3 h-[260px] overflow-hidden">
                         <ResponsiveContainer width="100%" height="100%">
@@ -639,7 +566,7 @@ function AppContent({ api, initialState }: AppContentProps) {
                       </div>
                     </div>
 
-                    <div className="w-full min-w-0 rounded-lg border bg-card p-4">
+                    <div className="phm-chart-card phm-chart-health w-full min-w-0 rounded-lg border bg-card p-4">
                       <h4 className="text-sm font-semibold">Health Score</h4>
                       <div className="mt-3 h-[260px] overflow-hidden">
                         <ResponsiveContainer width="100%" height="100%">
@@ -663,7 +590,7 @@ function AppContent({ api, initialState }: AppContentProps) {
                       </div>
                     </div>
 
-                    <div className="w-full min-w-0 rounded-lg border bg-card p-4">
+                    <div className="phm-chart-card phm-chart-vibration w-full min-w-0 rounded-lg border bg-card p-4">
                       <h4 className="text-sm font-semibold">Vibration</h4>
                       <div className="mt-3 h-[260px] overflow-hidden">
                         <ResponsiveContainer width="100%" height="100%">
@@ -682,7 +609,7 @@ function AppContent({ api, initialState }: AppContentProps) {
                       </div>
                     </div>
 
-                    <div className="w-full min-w-0 rounded-lg border bg-card p-4">
+                    <div className="phm-chart-card phm-chart-temperature w-full min-w-0 rounded-lg border bg-card p-4">
                       <h4 className="text-sm font-semibold">Temperature</h4>
                       <div className="mt-3 h-[260px] overflow-hidden">
                         <ResponsiveContainer width="100%" height="100%">
@@ -701,7 +628,7 @@ function AppContent({ api, initialState }: AppContentProps) {
                       </div>
                     </div>
 
-                    <div className="w-full min-w-0 rounded-lg border bg-card p-4">
+                    <div className="phm-chart-card phm-chart-pressure w-full min-w-0 rounded-lg border bg-card p-4">
                       <h4 className="text-sm font-semibold">Pressure</h4>
                       <div className="mt-3 h-[260px] overflow-hidden">
                         <ResponsiveContainer width="100%" height="100%">
@@ -720,7 +647,7 @@ function AppContent({ api, initialState }: AppContentProps) {
                       </div>
                     </div>
 
-                    <div className="w-full min-w-0 rounded-lg border bg-card p-4 lg:col-span-2">
+                    <div className="phm-chart-card phm-chart-fleet w-full min-w-0 rounded-lg border bg-card p-4 lg:col-span-2">
                       <h4 className="text-sm font-semibold">Fleet Status Distribution</h4>
                       <div className="mt-3 h-[220px] overflow-hidden">
                         <ResponsiveContainer width="100%" height="100%">
@@ -756,9 +683,104 @@ function AppContent({ api, initialState }: AppContentProps) {
                         ))}
                       </div>
                     </div>
+              </CardContent>
+            </Card>
+
+            <Tabs defaultValue="overview">
+              <TabsList>
+                <TabsTrigger value="overview">Pump Overview</TabsTrigger>
+                <TabsTrigger value="predictions">Predictions</TabsTrigger>
+                <TabsTrigger value="schema">Schema Explorer</TabsTrigger>
+              </TabsList>
+
+              <TabsPanel value="overview" className="space-y-4">
+                <Card className="w-full">
+                  <CardHeader>
+                    <CardTitle as="h2">Pump Drilldown</CardTitle>
+                    <CardDescription>Select a pump to inspect linked operational data.</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Select value={selectedPump?.pumpId ?? ''} onValueChange={handlePumpChange}>
+                      <SelectTrigger className="w-full max-w-sm" aria-label="Select pump">
+                        <SelectValue placeholder="Select pump" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {data.pumps.map((pump) => (
+                          <SelectItem key={pump.externalId} value={pump.pumpId}>
+                            {pump.pumpId} - {pump.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    {selectedPump ? (
+                      <div className="grid gap-4 lg:grid-cols-2">
+                        <Card>
+                          <CardHeader>
+                            <CardTitle as="h3">Pump Profile</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <dl className="grid grid-cols-[140px_1fr] gap-2 text-sm">
+                              <dt className="text-muted-foreground">Pump ID</dt>
+                              <dd>{selectedPump.pumpId}</dd>
+                              <dt className="text-muted-foreground">Name</dt>
+                              <dd>{selectedPump.name}</dd>
+                              <dt className="text-muted-foreground">Description</dt>
+                              <dd>{selectedPump.description}</dd>
+                              <dt className="text-muted-foreground">Install date</dt>
+                              <dd>{formatTimestamp(selectedPump.installDate)}</dd>
+                            </dl>
+                          </CardContent>
+                        </Card>
+
+                        <Card>
+                          <CardHeader>
+                            <CardTitle as="h3">Maintenance Events</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <SimpleTable
+                              columns={['Event', 'Type', 'Timestamp']}
+                              rows={selectedMaintenance.map((event) => [
+                                event.eventId,
+                                event.maintenanceType,
+                                formatTimestamp(event.timestamp),
+                              ])}
+                              emptyMessage="No maintenance records for selected pump."
+                            />
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ) : null}
+
+                    <Card className="w-full">
+                      <CardHeader>
+                        <CardTitle as="h3">Pump Features</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <SimpleTable
+                          columns={['Feature', 'Value', 'Timestamp']}
+                          rows={selectedFeatures.map((feature) => [
+                            feature.name,
+                            feature.value,
+                            formatTimestamp(feature.timestamp),
+                          ])}
+                          emptyMessage="No feature rows for selected pump."
+                        />
+                      </CardContent>
+                    </Card>
                   </CardContent>
                 </Card>
+              </TabsPanel>
 
+              <TabsPanel value="predictions" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle as="h2">Prediction and Event Stream</CardTitle>
+                    <CardDescription>
+                      View inference outputs alongside failure events to support triage decisions.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
                 <Card className="w-full">
                   <CardHeader>
                     <CardTitle as="h3">
@@ -822,109 +844,122 @@ function AppContent({ api, initialState }: AppContentProps) {
                     </table>
                   </CardContent>
                 </Card>
-              </CardContent>
-            </Card>
-          </TabsPanel>
+                  </CardContent>
+                </Card>
+              </TabsPanel>
 
-          <TabsPanel value="schema" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle as="h2">Schema Explorer</CardTitle>
-                <CardDescription>
-                  Inspect PumpModelV2 views and property constraints directly from CDF.
-                </CardDescription>
-              </CardHeader>
+              <TabsPanel value="schema" className="space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle as="h2">Schema Explorer</CardTitle>
+                    <CardDescription>
+                      Inspect PumpModelV2 views and property constraints directly from CDF.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid gap-3 md:grid-cols-[1fr_220px]">
+                      <Input
+                        value={schemaQuery}
+                        onChange={(event) => handleSchemaQueryChange(event.target.value)}
+                        placeholder="Search view or field name"
+                        aria-label="Search schema"
+                      />
+                      <Select value={schemaFilter} onValueChange={handleSchemaFilterChange}>
+                        <SelectTrigger aria-label="Filter schema by usage">
+                          <SelectValue placeholder="Filter by usage" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All views</SelectItem>
+                          <SelectItem value="node">Node views</SelectItem>
+                          <SelectItem value="edge">Edge views</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-4">
+                      {filteredSchemas.map((schema) => (
+                        <SchemaCard key={schema.externalId} schema={schema} />
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsPanel>
+            </Tabs>
+          </div>
+
+          <aside className="xl:sticky xl:top-6 xl:self-start">
+            <Card className="overflow-hidden">
+              <div className="phm-chat-header px-4 py-3">
+                <div className="phm-chat-headings">
+                  <CardTitle as="h2">AI Assistant</CardTitle>
+                  <CardDescription>Ask about pump health and maintenance.</CardDescription>
+                </div>
+              </div>
               <CardContent className="space-y-4">
-                <div className="grid gap-3 md:grid-cols-[1fr_220px]">
-                  <Input
-                    value={schemaQuery}
-                    onChange={(event) => handleSchemaQueryChange(event.target.value)}
-                    placeholder="Search view or field name"
-                    aria-label="Search schema"
+                <div className="phm-chat-body space-y-4">
+                  <div className="max-h-[420px] space-y-2 overflow-y-auto pr-1">
+                    {chatMessages.length === 0 ? (
+                      <div className="rounded-lg border border-dashed p-5 text-center text-sm text-muted-foreground">
+                        Start a conversation. Try “Which pumps need attention?” or click any chart datapoint.
+                      </div>
+                    ) : (
+                      chatMessages.map((msg, idx) => (
+                        <Card key={`${msg.role}-${idx}`}>
+                          <CardHeader>
+                            <CardTitle as="h3">{msg.role === 'user' ? 'You' : 'Agent'}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="whitespace-pre-wrap text-sm">{msg.content}</p>
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
+                  </div>
+                  <Textarea
+                    value={chatDraft}
+                    onChange={(event) => handleChatDraftChange(event.target.value)}
+                    placeholder="Ask about pump health..."
+                    aria-label="Agent chat message"
                   />
-                  <Select value={schemaFilter} onValueChange={handleSchemaFilterChange}>
-                    <SelectTrigger aria-label="Filter schema by usage">
-                      <SelectValue placeholder="Filter by usage" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All views</SelectItem>
-                      <SelectItem value="node">Node views</SelectItem>
-                      <SelectItem value="edge">Edge views</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-4">
-                  {filteredSchemas.map((schema) => (
-                    <SchemaCard key={schema.externalId} schema={schema} />
-                  ))}
+                  <Button onClick={() => void sendChatMessage()} disabled={isChatLoading || !chatDraft.trim()} className="w-full">
+                    {isChatLoading ? 'Sending...' : 'Send'}
+                  </Button>
                 </div>
               </CardContent>
             </Card>
-          </TabsPanel>
-
-          <TabsPanel value="chat" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle as="h2">Direct Agent Chat</CardTitle>
-                <CardDescription>
-                  Sends messages directly from Flows app to CDF Agent API using host token.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Textarea
-                  value={chatDraft}
-                  onChange={(event) => handleChatDraftChange(event.target.value)}
-                  placeholder="Ask about a pump, predictions, or maintenance events"
-                  aria-label="Agent chat message"
-                />
-                <Button onClick={() => void sendChatMessage()} disabled={isChatLoading || !chatDraft.trim()}>
-                  {isChatLoading ? 'Sending...' : 'Send to Agent'}
-                </Button>
-                <div className="space-y-2">
-                  {chatMessages.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">No messages yet.</p>
-                  ) : (
-                    chatMessages.map((msg, idx) => (
-                      <Card key={`${msg.role}-${idx}`}>
-                        <CardHeader>
-                          <CardTitle as="h3">{msg.role === 'user' ? 'You' : 'Agent'}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="whitespace-pre-wrap text-sm">{msg.content}</p>
-                        </CardContent>
-                      </Card>
-                    ))
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsPanel>
-        </Tabs>
+          </aside>
+        </div>
       </section>
     </main>
   );
 }
 
-type MetricCardProps = {
+type SummaryCardProps = {
   title: string;
   value: string;
   detail: string;
+  tone: 'neutral' | 'danger' | 'warning' | 'success' | 'accent';
   icon: ReactNode;
 };
 
-function MetricCard({ title, value, detail, icon }: MetricCardProps) {
+function SummaryCard({ title, value, detail, tone, icon }: SummaryCardProps) {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardDescription>{title}</CardDescription>
-        {icon}
-      </CardHeader>
-      <CardContent>
-        <p className="text-2xl font-semibold">{value}</p>
-        <p className="text-xs text-muted-foreground">{detail}</p>
-      </CardContent>
-    </Card>
+    <div className={`phm-summary-card phm-summary-${tone}`}>
+      <Card>
+        <CardHeader>
+          <div className="phm-summary-head">
+            <CardDescription>{title}</CardDescription>
+            {icon}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="phm-summary-body">
+            <p>{value}</p>
+            <p>{detail}</p>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

@@ -39,6 +39,8 @@
 - FR-006: The app MUST persist user UI state (selected pump, schema query, schema filter, chat draft) through host `syncInternalState` so reload/share restores context.
 - FR-007: The app MUST support direct agent chat by calling the CDF Agent API from the frontend using host-provided base URL, project, and access token.
 - FR-008: The app MUST provide a PumpCharts section in the predictions view, and chart datapoint clicks MUST select the associated pump and prefill the chat draft with a contextual troubleshooting prompt.
+- FR-009: The app MUST present a dashboard shell with a top summary strip (Total Pumps, Critical, Warning, Healthy, Avg Risk) visible on initial load.
+- FR-010: The app MUST render the AI chat interface as a persistent right-side panel on desktop layouts while keeping chart and drilldown content in the main left pane.
 
 ## Success Criteria
 

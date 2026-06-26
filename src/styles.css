@@ -6,4 +6,149 @@
   --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-source-code-pro: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
+  --phm-card-radius-lg: 0.75rem;
+  --phm-card-radius-md: 0.65rem;
+}
+
+.phm-app {
+  background:
+    radial-gradient(circle at 10% -10%, rgba(16, 88, 194, 0.14), transparent 38%),
+    radial-gradient(circle at 90% -20%, rgba(11, 123, 188, 0.12), transparent 42%),
+    linear-gradient(180deg, #f6f8fc 0%, #edf2f8 100%);
+}
+
+.phm-hero {
+  background:
+    linear-gradient(125deg, #0a4da8 0%, #0f63c8 48%, #0f4ea1 100%);
+}
+
+.phm-hero-shell {
+  border-radius: var(--phm-card-radius-lg);
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.16);
+  overflow: hidden;
+}
+
+.phm-hero-copy [data-slot="card-title"] {
+  color: #ffffff;
+  font-size: 2.1rem;
+  line-height: 1.12;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.phm-hero-copy [data-slot="card-description"] {
+  color: rgba(233, 242, 255, 0.94);
+  margin-top: 0.35rem;
+}
+
+.phm-summary-card {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  border-radius: var(--phm-card-radius-md);
+}
+
+.phm-summary-card [data-slot="card"] {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  border-radius: inherit;
+}
+
+.phm-summary-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.phm-summary-head [data-slot="card-description"] {
+  color: rgba(15, 23, 42, 0.75);
+}
+
+.phm-summary-body {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.phm-summary-body p:first-child {
+  font-size: 2rem;
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.phm-summary-body p:last-child {
+  font-size: 0.76rem;
+  opacity: 0.82;
+}
+
+.phm-summary-neutral {
+  background: linear-gradient(145deg, #ffffff, #f5f8fc);
+}
+
+.phm-summary-danger {
+  background: linear-gradient(145deg, #fef3f4, #fde6e8);
+  color: #b42336;
+}
+
+.phm-summary-warning {
+  background: linear-gradient(145deg, #fff8ec, #fff0d6);
+  color: #9d6000;
+}
+
+.phm-summary-success {
+  background: linear-gradient(145deg, #ebf8f1, #daf0e4);
+  color: #0f7a49;
+}
+
+.phm-summary-accent {
+  background: linear-gradient(145deg, #ecf4ff, #dcecff);
+  color: #0a4da8;
+}
+
+.phm-chat-header {
+  background: linear-gradient(120deg, #0f63c8, #0a4da8);
+}
+
+.phm-chat-headings [data-slot="card-title"] {
+  color: #ffffff;
+  font-size: 1.15rem;
+}
+
+.phm-chat-headings [data-slot="card-description"] {
+  color: rgba(233, 242, 255, 0.94);
+}
+
+.phm-chat-body {
+  padding: 0.3rem 0.25rem 0;
+}
+
+.phm-chart-card {
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-radius: var(--phm-card-radius-md);
+}
+
+.phm-chart-risk {
+  border-top-color: #cc5f71;
+}
+
+.phm-chart-health {
+  border-top-color: #3d81be;
+}
+
+.phm-chart-vibration {
+  border-top-color: #d58a45;
+}
+
+.phm-chart-temperature {
+  border-top-color: #b9972f;
+}
+
+.phm-chart-pressure {
+  border-top-color: #2a8967;
+}
+
+.phm-chart-fleet {
+  border-top-color: #3f77b6;
 }

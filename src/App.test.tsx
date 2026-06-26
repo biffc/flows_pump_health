@@ -1,6 +1,6 @@
 import type { HostAppAPI, ConnectToHostAppResult } from '@cognite/app-sdk';
 import { CogniteClient } from '@cognite/sdk';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -127,22 +127,35 @@ describe('App', () => {
 
   it('renders pump health dashboard with schema metadata', async () => {
     render(<App deps={makeConnectedDeps()} />);
-    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
-    expect(screen.getByText('Pump fleet')).toBeInTheDocument();
-    expect(screen.getByText('Sensor alerts')).toBeInTheDocument();
-    expect(screen.getByText('Schema views')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('PHM Modeling for Pumps')).toBeInTheDocument());
+    expect(screen.getByText('Total Pumps')).toBeInTheDocument();
+    expect(screen.getByText('Critical')).toBeInTheDocument();
+    expect(screen.getByText('Warning')).toBeInTheDocument();
+    expect(screen.getByText('Healthy')).toBeInTheDocument();
     expect(screen.getByText('Predictions')).toBeInTheDocument();
     expect(screen.getByText('Schema Explorer')).toBeInTheDocument();
     expect(screen.getByText(/PumpModelV2 v1/)).toBeInTheDocument();
 
+    const criticalCard = screen.getByText('Critical').closest('[data-slot="card"]');
+    const warningCard = screen.getByText('Warning').closest('[data-slot="card"]');
+    const healthyCard = screen.getByText('Healthy').closest('[data-slot="card"]');
+
+    expect(criticalCard).not.toBeNull();
+    expect(warningCard).not.toBeNull();
+    expect(healthyCard).not.toBeNull();
+
+    expect(within(criticalCard!).getByText('1')).toBeInTheDocument();
+    expect(within(warningCard!).getByText('0')).toBeInTheDocument();
+    expect(within(healthyCard!).getByText('4')).toBeInTheDocument();
+
     await userEvent.click(screen.getByRole('tab', { name: 'Predictions' }));
-    expect(screen.getByText('PumpCharts')).toBeInTheDocument();
+    expect(screen.getByText('Monitoring Charts')).toBeInTheDocument();
   });
 
   it('syncs internal state when pump selection changes', async () => {
     const api = makeApi();
     render(<App deps={makeConnectedDeps(api)} />);
-    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('PHM Modeling for Pumps')).toBeInTheDocument());
 
     await userEvent.click(screen.getByRole('combobox', { name: 'Select pump' }));
     await userEvent.click(screen.getByRole('option', { name: '102 - Pump 102' }));
@@ -169,7 +182,7 @@ describe('App', () => {
       createClient: vi.fn<AppDeps['createClient']>((config) => new CogniteClient(config)),
     };
     render(<App deps={deps} />);
-    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('PHM Modeling for Pumps')).toBeInTheDocument());
 
     await userEvent.click(screen.getByRole('tab', { name: 'Pump Overview' }));
     expect(screen.getByText('Pump 103')).toBeInTheDocument();
@@ -192,7 +205,7 @@ describe('App', () => {
 
   it('updates selected pump and chat draft from a chart click', async () => {
     render(<App deps={makeConnectedDeps()} />);
-    await waitFor(() => expect(screen.getByText('Pump Health Control Center')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('PHM Modeling for Pumps')).toBeInTheDocument());
 
     await userEvent.click(screen.getByRole('tab', { name: 'Predictions' }));
     const barChartButtons = screen.getAllByRole('button', { name: 'mock-barchart-click' });
