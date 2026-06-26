@@ -5,6 +5,16 @@
       {
         "sources": ["https://tridiagonal.ai"],
         "directives": ["img-src"]
+      },
+      {
+        "sources": [
+          "https://aw-was-gp-001.cognitedata.com",
+          "https://*.cognitedata.com",
+          "https://localhost:3003",
+          "https://local.cognite.ai:3003",
+          "https://vite.local.cognite.ai:3003"
+        ],
+        "directives": ["connect-src"]
       }
     ]
   }

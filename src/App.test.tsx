@@ -213,9 +213,58 @@ describe('App', () => {
 
     expect(screen.getByText('Predictions for Pump 102')).toBeInTheDocument();
 
-    await userEvent.click(screen.getByRole('tab', { name: 'Agent Chat' }));
     expect(screen.getByLabelText('Agent chat message')).toHaveValue(
       'Pump 102 (Pump 102) has failure risk at 80.0. Provide likely causes, immediate checks, and recommended next actions.'
     );
+  });
+
+  it('sends chat requests to Atlas AI endpoint with typed text content', async () => {
+    const fetchMock = vi.fn<typeof fetch>(() =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify({
+            response: {
+              messages: [
+                {
+                  role: 'agent',
+                  content: { type: 'text', text: 'mock-response' },
+                },
+              ],
+            },
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
+      )
+    );
+
+    vi.stubGlobal('fetch', fetchMock);
+
+    try {
+      render(<App deps={makeConnectedDeps()} />);
+      await waitFor(() => expect(screen.getByText('PHM Modeling for Pumps')).toBeInTheDocument());
+
+      const input = screen.getByLabelText('Agent chat message');
+      await userEvent.type(input, 'test chat message');
+      await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+
+      await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+      const [url, options] = fetchMock.mock.calls[0] ?? [];
+      expect(String(url)).toContain('/api/v1/projects/tridcognite-sanbox/ai/agents/chat');
+      expect((options?.headers as Record<string, string>)['cdf-version']).toBe('20230101-beta');
+
+      const requestBody = JSON.parse(String(options?.body)) as {
+        agentExternalId?: string;
+        messages?: Array<{ role?: string; content?: { type?: string; text?: string } }>;
+      };
+
+      expect(requestBody.agentExternalId).toBe('c649e622-2350-4b86-911e-404a4974f5ae');
+      expect(requestBody.agentId).toBe('c649e622-2350-4b86-911e-404a4974f5ae');
+      expect(requestBody.messages?.[0]?.role).toBe('user');
+      expect(requestBody.messages?.[0]?.content?.type).toBe('text');
+      expect(requestBody.messages?.[0]?.content?.text).toBe('test chat message');
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });

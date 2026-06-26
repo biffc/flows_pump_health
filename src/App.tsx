@@ -427,30 +427,114 @@ function AppContent({ api, initialState }: AppContentProps) {
       const baseUrl = await api.getBaseUrl();
       const project = await api.getProject();
       const token = await api.getAccessToken();
-      const url = `${baseUrl}/api/v1/projects/${project}/agents/${AGENT_EXTERNAL_ID}/chat`;
+      const chatBody = {
+        agentExternalId: AGENT_EXTERNAL_ID,
+        agentId: AGENT_EXTERNAL_ID,
+        messages: [
+          {
+            role: 'user',
+            content: {
+              type: 'text',
+              text: message,
+            },
+          },
+        ],
+      };
 
-      const response = await fetch(url, {
+      const modernUrl = `${baseUrl}/api/v1/projects/${project}/ai/agents/chat`;
+      const modernProxyUrl = `/cdf-api/api/v1/projects/${project}/ai/agents/chat`;
+      const legacyUrl = `${baseUrl}/api/v1/projects/${project}/agents/${AGENT_EXTERNAL_ID}/chat`;
+      const legacyProxyUrl = `/cdf-api/api/v1/projects/${project}/agents/${AGENT_EXTERNAL_ID}/chat`;
+
+      const modernRequestInit: RequestInit = {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'cdf-version': '20230101-beta',
+        },
+        body: JSON.stringify(chatBody),
+      };
+
+      const legacyRequestInit: RequestInit = {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
           'cdf-version': 'alpha',
         },
-        body: JSON.stringify({
-          messages: [{ role: 'user', content: message }],
-        }),
-      });
+        body: JSON.stringify({ messages: chatBody.messages }),
+      };
+
+      const attempts: Array<{ url: string; request: RequestInit }> = [
+        { url: modernUrl, request: modernRequestInit },
+        // Local dev fallback: same request through Vite proxy to avoid browser CORS/network issues.
+        { url: modernProxyUrl, request: modernRequestInit },
+        { url: legacyUrl, request: legacyRequestInit },
+        { url: legacyProxyUrl, request: legacyRequestInit },
+      ];
+
+      const attemptErrors: string[] = [];
+      let response: Response | null = null;
+
+      for (const attempt of attempts) {
+        try {
+          const candidate = await fetch(attempt.url, attempt.request);
+
+          if (!candidate.ok) {
+            const details = await candidate.text();
+            const detailText = `(${candidate.status}) ${details}`;
+
+            // These often indicate endpoint/payload mismatch; try next known variant.
+            if (candidate.status === 400 || candidate.status === 404) {
+              attemptErrors.push(`${attempt.url} ${detailText}`);
+              continue;
+            }
+
+            throw new Error(`Agent chat failed ${detailText}`);
+          }
+
+          response = candidate;
+          break;
+        } catch (error) {
+          if (isLikelyNetworkError(error)) {
+            const networkMessage = error instanceof Error ? error.message : String(error);
+            attemptErrors.push(`${attempt.url} network error: ${networkMessage}`);
+            continue;
+          }
+          throw error;
+        }
+      }
+
+      if (!response) {
+        throw new Error(
+          `All Agent API routes failed. ${attemptErrors.length > 0 ? attemptErrors.join(' | ') : 'No response.'}`
+        );
+      }
 
       if (!response.ok) {
         const details = await response.text();
         throw new Error(`Agent chat failed (${response.status}): ${details}`);
       }
 
-      const payload = (await response.json()) as { messages?: Array<Record<string, unknown>> };
-      const agentText = extractAgentText(payload.messages);
+      const payload = (await response.json()) as {
+        response?: { messages?: Array<Record<string, unknown>> };
+        messages?: Array<Record<string, unknown>>;
+      };
+      const agentMessages = payload.response?.messages ?? payload.messages;
+      const agentText = extractAgentText(agentMessages);
       setChatMessages((prev) => [...prev, { role: 'agent', content: agentText }]);
     } catch (error) {
-      const messageText = error instanceof Error ? error.message : String(error);
+      const detailedFailure =
+        error instanceof Error && error.message.startsWith('All Agent API routes failed.');
+
+      const messageText = detailedFailure
+        ? `${error.message} If this persists, verify Fusion session auth and Atlas agent permissions for this project.`
+        : isLikelyNetworkError(error)
+          ? 'Network error contacting Agent API. If you are developing locally, ensure Fusion uses port 3003 and try refreshing the page.'
+          : error instanceof Error
+            ? error.message
+            : String(error);
       setChatMessages((prev) => [...prev, { role: 'agent', content: `Error: ${messageText}` }]);
     } finally {
       setIsChatLoading(false);
@@ -1146,13 +1230,43 @@ function classifyStatus(riskPct: number): PumpChartRow['status'] {
 }
 
 function getPumpRiskPct(predictions: PumpPrediction[], pumpId: string): number {
-  const maxRisk = predictions
-    .filter((prediction) => prediction.pumpId === pumpId)
+  const pumpPredictions = predictions.filter((prediction) => prediction.pumpId === pumpId);
+  if (pumpPredictions.length === 0) return 0;
+
+  const explicitRisk = pumpPredictions
+    .filter((prediction) => !isHealthyPredictionType(prediction.predictionType))
     .reduce((max, prediction) => {
       return prediction.predictionValue > max ? prediction.predictionValue : max;
     }, 0);
 
-  return Number((maxRisk * 100).toFixed(1));
+  if (explicitRisk > 0) {
+    return Number((explicitRisk * 100).toFixed(1));
+  }
+
+  const healthyScore = pumpPredictions
+    .filter((prediction) => isHealthyPredictionType(prediction.predictionType))
+    .reduce((max, prediction) => {
+      return prediction.predictionValue > max ? prediction.predictionValue : max;
+    }, 0);
+
+  const inferredRisk = healthyScore > 0 ? 1 - healthyScore : 0;
+  return Number((inferredRisk * 100).toFixed(1));
+}
+
+function isHealthyPredictionType(predictionType: string): boolean {
+  const normalized = predictionType.trim().toLowerCase();
+  return normalized.includes('healthy') || normalized.includes('normal') || normalized.includes('good');
+}
+
+function isLikelyNetworkError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+  const normalized = error.message.toLowerCase();
+  return (
+    normalized.includes('failed to fetch') ||
+    normalized.includes('networkerror') ||
+    normalized.includes('network error') ||
+    normalized.includes('load failed')
+  );
 }
 
 function findPumpFeatureMetric(features: PumpFeature[], pumpId: string, keywords: string[]): number {
