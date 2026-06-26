@@ -8,8 +8,9 @@
     "npm": ">=11.10.0"
   },
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "vite --port 3003 --strictPort",
+    "dev": "vite --port 3003 --strictPort",
+    "dev:reset": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"Get-NetTCPConnection -LocalPort 3003 -State Listen -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }\" && vite --port 3003 --strictPort",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest run",

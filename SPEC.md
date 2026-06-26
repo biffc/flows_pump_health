@@ -1,5 +1,9 @@
 # Feature Specification: Pump Health
 
+## Contributor Note
+
+- For local development and Fusion live-refresh troubleshooting (fixed port `3003`, URL pattern, and certificate trust), see `README.md` at the repo root.
+
 <!--
   This is your app's living product spec. Edit it directly or ask your coding
   agent to collaborate with you on it.

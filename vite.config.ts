@@ -19,7 +19,16 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3001,
+    port: 3003,
+    strictPort: true,
+    proxy: {
+      '/cdf-api': {
+        target: 'https://aw-was-gp-001.cognitedata.com',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/cdf-api/, ''),
+      },
+    },
   },
   worker: {
     format: 'es',
