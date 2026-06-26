@@ -45,6 +45,12 @@
 - FR-008: The app MUST provide a PumpCharts section in the predictions view, and chart datapoint clicks MUST select the associated pump and prefill the chat draft with a contextual troubleshooting prompt.
 - FR-009: The app MUST present a dashboard shell with a top summary strip (Total Pumps, Critical, Warning, Healthy, Avg Risk) visible on initial load.
 - FR-010: The app MUST render the AI chat interface as a persistent right-side panel on desktop layouts while keeping chart and drilldown content in the main left pane.
+- FR-011: The app MUST support two navigation methods for pump detail drilldown:
+  - **Option 1 (React Router)**: Client-side SPA routing with browser history; no Fusion state sync required.
+  - **Option 2 (React Router + Fusion Sync)**: Same routing as Option 1, but syncs UI state with Fusion host via `api.syncInternalState()` to enable shared links and context restoration across sessions.
+  - Both options MUST allow users to toggle between methods via a visible demo card on the dashboard.
+  - Option 2 MUST be unavailable (disabled) when running outside Fusion host (demo/local mode).
+  - Forward and back navigation MUST work identically for both options.
 
 ## Success Criteria
 

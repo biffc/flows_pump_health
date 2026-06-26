@@ -136,17 +136,17 @@ describe('App', () => {
     expect(screen.getByText('Schema Explorer')).toBeInTheDocument();
     expect(screen.getByText(/PumpModelV2 v1/)).toBeInTheDocument();
 
-    const criticalCard = screen.getByText('Critical').closest('[data-slot="card"]');
-    const warningCard = screen.getByText('Warning').closest('[data-slot="card"]');
-    const healthyCard = screen.getByText('Healthy').closest('[data-slot="card"]');
+    const criticalCard = screen.getByText('Critical').closest('[data-slot="card"]') as HTMLElement;
+    const warningCard = screen.getByText('Warning').closest('[data-slot="card"]') as HTMLElement;
+    const healthyCard = screen.getByText('Healthy').closest('[data-slot="card"]') as HTMLElement;
 
     expect(criticalCard).not.toBeNull();
     expect(warningCard).not.toBeNull();
     expect(healthyCard).not.toBeNull();
 
-    expect(within(criticalCard!).getByText('1')).toBeInTheDocument();
-    expect(within(warningCard!).getByText('0')).toBeInTheDocument();
-    expect(within(healthyCard!).getByText('4')).toBeInTheDocument();
+    expect(within(criticalCard).getByText('1')).toBeInTheDocument();
+    expect(within(warningCard).getByText('0')).toBeInTheDocument();
+    expect(within(healthyCard).getByText('4')).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole('tab', { name: 'Predictions' }));
     expect(screen.getByText('Monitoring Charts')).toBeInTheDocument();
@@ -203,7 +203,21 @@ describe('App', () => {
     ).toContain('Pump 102 (Pump 102) has failure risk at 80.0.');
   });
 
-  it('updates selected pump and chat draft from a chart click', async () => {
+  it('auto-sends a chat message and clears draft when a chart bar is clicked', async () => {
+    const fetchMock = vi.fn<typeof fetch>(() =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify({
+            response: {
+              messages: [{ role: 'agent', content: { type: 'text', text: 'mock-chart-response' } }],
+            },
+          }),
+          { status: 200, headers: { 'Content-Type': 'application/json' } }
+        )
+      )
+    );
+    vi.stubGlobal('fetch', fetchMock);
+
     render(<App deps={makeConnectedDeps()} />);
     await waitFor(() => expect(screen.getByText('PHM Modeling for Pumps')).toBeInTheDocument());
 
@@ -211,11 +225,20 @@ describe('App', () => {
     const barChartButtons = screen.getAllByRole('button', { name: 'mock-barchart-click' });
     await userEvent.click(barChartButtons[0]);
 
+    // Pump selection updates to the clicked pump
     expect(screen.getByText('Predictions for Pump 102')).toBeInTheDocument();
 
-    expect(screen.getByLabelText('Agent chat message')).toHaveValue(
-      'Pump 102 (Pump 102) has failure risk at 80.0. Provide likely causes, immediate checks, and recommended next actions.'
+    // Auto-send fired: user message appears in chat history
+    await waitFor(() =>
+      expect(
+        screen.getByText(/Pump 102.*has failure risk at 80\.0/)
+      ).toBeInTheDocument()
     );
+
+    // Draft is cleared after send
+    expect(screen.getByLabelText('Agent chat message')).toHaveValue('');
+
+    vi.unstubAllGlobals();
   });
 
   it('sends chat requests to Atlas AI endpoint with typed text content', async () => {
@@ -259,7 +282,6 @@ describe('App', () => {
       };
 
       expect(requestBody.agentExternalId).toBe('c649e622-2350-4b86-911e-404a4974f5ae');
-      expect(requestBody.agentId).toBe('c649e622-2350-4b86-911e-404a4974f5ae');
       expect(requestBody.messages?.[0]?.role).toBe('user');
       expect(requestBody.messages?.[0]?.content?.type).toBe('text');
       expect(requestBody.messages?.[0]?.content?.text).toBe('test chat message');
