@@ -2,7 +2,7 @@
   "name": "Pump Health",
   "description": "Monitor Pump health in CDF Model",
   "externalId": "pump-health",
-  "versionTag": "0.0.1",
+  "versionTag": "0.0.16",
   "infra": "appsApi",
   "deployments": [
     {
@@ -10,8 +10,8 @@
       "project": "tridcognite-sanbox",
       "baseUrl": "https://aw-was-gp-001.cognitedata.com",
       "published": false,
-      "deployClientId": "",
-      "deploySecretName": "TRIDIAGONAL.AI_TRIDCOGNITE_SANBOX_AW_WAS_GP_001"
+      "deployClientId": "ad9fc558-2937-422e-9a20-72fea9393b90",
+      "deploySecretName": "TRIDIAGONAL_AI_TRIDCOGNITE_SANBOX_AW_WAS_GP_001"
     }
   ]
 }

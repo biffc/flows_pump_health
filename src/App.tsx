@@ -5,7 +5,7 @@ import { Alert, AlertDescription, Card, CardContent, Loader } from '@cognite/aur
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import type { ComponentProps } from 'react';
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 
 import { Dashboard } from './pages/Dashboard';
 import { PumpDetail } from './pages/PumpDetail';
@@ -226,7 +226,7 @@ function AppContent({ api, initialState }: AppContentProps) {
   };
 
   return (
-    <BrowserRouter>
+    <MemoryRouter initialEntries={['/'] } initialIndex={0}>
       <Routes>
         <Route
           path="/"
@@ -255,7 +255,7 @@ function AppContent({ api, initialState }: AppContentProps) {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 }
 

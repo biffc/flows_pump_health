@@ -3,6 +3,10 @@
   "permissions": {
     "network": [
       {
+        "sources": ["'self'", "'sha256-YXrOcXxwYHAtailg2gT9g96OcmUjpejqaduj/Pv7ep0='", "'unsafe-eval'"],
+        "directives": ["script-src"]
+      },
+      {
         "sources": ["https://tridiagonal.ai"],
         "directives": ["img-src"]
       },
