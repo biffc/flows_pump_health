@@ -1,5 +1,27 @@
 # Pump Health (Flows App)
 
+## Copy/Paste Quick Start
+
+```bash
+cd C:\Cognite\flows_pump_health
+npx @cognite/cli@latest apps deploy --interactive
+npm run dev
+```
+
+```text
+https://tridiagonalsolutions.fusion.cognite.com/tridcognite-sanbox/flows-apps/development/pump-health/3003?cluster=aw-was-gp-001.cognitedata.com&workspace=industrial-tools
+```
+
+### Local-Only Quick Start
+
+```bash
+npm run dev
+```
+
+```text
+https://localhost:3003/
+```
+
 ## Development Startup Procedure
 
 This app is pinned to port `3003` for predictable Fusion live refresh.
